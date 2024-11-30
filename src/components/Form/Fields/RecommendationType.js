@@ -1,27 +1,68 @@
-import React from 'react';
-import Checkbox from '../../shared/Checkbox';
+import React, { useState } from 'react';
+import { Button } from '../../shared/Button';
 
 function RecommendationType({ onRecommendationTypeChange }) {
+  const [selected, setSelected] = useState('MultipleProducts');
+
+  const handleSelect = (type) => {
+    setSelected(type);
+    onRecommendationTypeChange(type);
+  };
+
   return (
-    <div className="mb-4">
-      <h2 className="text-lg font-bold mb-2">Tipo de Recomendação:</h2>
-      <div className="flex items-center">
-        <Checkbox
-          type="radio"
-          name="recommendationType"
-          value="SingleProduct"
-          onChange={() => onRecommendationTypeChange('SingleProduct')}
-          className="mr-2"
-        />
-        <label htmlFor="SingleProduct" className="mr-4">Produto Único</label>
-        <Checkbox
-          type="radio"
-          name="recommendationType"
-          value="MultipleProducts"
-          onChange={() => onRecommendationTypeChange('MultipleProducts')}
-          className="mr-2"
-        />
-        <label htmlFor="MultipleProducts">Múltiplos Produtos</label>
+    <div className="space-y-2 w-full">
+      <div className="flex gap-3 ">
+        <Button
+          variant={'outline'}
+          className={`py-4 space-x-2 transition-transform ${selected === 'SingleProduct' ? 'border-blue-500 shadow-lg' : ''
+            }`}
+          onClick={() => handleSelect('SingleProduct')}
+        >
+          <div className="rounded-full bg-blue-100 p-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="text-blue-600"
+            >
+              <rect width="18" height="18" x="3" y="3" rx="2" />
+              <path d="M3 9h18" />
+              <path d="M9 21V9" />
+            </svg>
+          </div>
+          <span className="block font-semibold text-md">Produto Único</span>
+        </Button>
+
+        <Button
+          variant={'outline'}
+          className={`py-4 space-x-2 transition-transform ${selected === 'MultipleProducts' ? 'border-blue-500 shadow-lg' : ''}`}
+          onClick={() => handleSelect('MultipleProducts')}
+        >
+          <div className="rounded-full bg-blue-100 p-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="text-blue-600"
+            >
+              <rect x="2" y="2" width="14" height="14" rx="2" />
+              <rect x="8" y="8" width="14" height="14" rx="2" />
+            </svg>
+          </div>
+          <span className="block font-semibold text-md">Múltiplos Produtos</span>
+        </Button>
       </div>
     </div>
   );

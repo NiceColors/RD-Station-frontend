@@ -1,55 +1,63 @@
-// Form.js
-
-import React, { useEffect } from 'react';
-import { Preferences, Features, RecommendationType } from './Fields';
-import { SubmitButton } from './SubmitButton';
-import useProducts from '../../hooks/useProducts';
-import useForm from '../../hooks/useForm';
-import useRecommendations from '../../hooks/useRecommendations';
+import React from 'react';
+import { useProductsContext } from '../../contexts/products.context';
+import { Features, Preferences, RecommendationType } from './Fields';
 
 function Form() {
-  const { preferences, features, products } = useProducts();
-  const { formData, handleChange } = useForm({
-    selectedPreferences: [],
-    selectedFeatures: [],
-    selectedRecommendationType: '',
-  });
+  const {
+    preferences,
+    features,
+    formData,
+    handleChange,
+    generateRecommendations
+  } = useProductsContext();
 
-  const { getRecommendations, recommendations } = useRecommendations(products);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const dataRecommendations = getRecommendations(formData);
-
-    /**
-     * Defina aqui a lógica para atualizar as recomendações e passar para a lista de recomendações
-     */
+  const handleButtonClick = (e) => {
+    e.stopPropagation();
+    generateRecommendations();
   };
 
   return (
-    <form
-      className="max-w-md mx-auto p-4 bg-white rounded-lg shadow-md"
-      onSubmit={handleSubmit}
-    >
-      <Preferences
-        preferences={preferences}
-        onPreferenceChange={(selected) =>
-          handleChange('selectedPreferences', selected)
-        }
-      />
-      <Features
-        features={features}
-        onFeatureChange={(selected) =>
-          handleChange('selectedFeatures', selected)
-        }
-      />
-      <RecommendationType
-        onRecommendationTypeChange={(selected) =>
-          handleChange('selectedRecommendationType', selected)
-        }
-      />
-      <SubmitButton text="Obter recomendação" />
-    </form>
+    <div className="space-y-6 rounded-lg bg-white p-6">
+      <div className="space-y-4">
+        <div className="grid grid-cols-12 gap-4">
+          <div className="col-span-3">
+            <Preferences
+              preferences={preferences}
+              selectedPreferences={formData.selectedPreferences}
+              onPreferenceChange={(selected) =>
+                handleChange('selectedPreferences', selected)
+              }
+            />
+          </div>
+          <div className="col-span-3">
+            <Features
+              features={features}
+              selectedFeatures={formData.selectedFeatures}
+              onFeatureChange={(selected) =>
+                handleChange('selectedFeatures', selected)
+              }
+            />
+          </div>
+          <div className="col-span-4">
+            <RecommendationType
+              onRecommendationTypeChange={(selected) =>
+                handleChange('selectedRecommendationType', selected)
+              }
+            />
+          </div>
+          <div className="col-span-2">
+            <button
+              type="button"
+              onClick={handleButtonClick}
+              className="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+            >
+              Obter recomendação
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
