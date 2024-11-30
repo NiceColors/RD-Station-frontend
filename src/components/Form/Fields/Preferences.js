@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Button } from '../../shared/Button'
 import Checkbox from '../../shared/Checkbox'
 
@@ -38,12 +38,15 @@ const PreferencesList = ({ preferences, currentPreferences, onPreferenceChange }
 
 const PreferencesHeader = ({ currentPreferences, onClear }) => (
   <div className="mb-4 flex items-center justify-between">
-    <h3 className="font-semibold">Filtrar por preferências</h3>
+    <div className="flex items-center gap-2">
+      <h3 className="font-semibold text-gray-800">Selecionar preferências</h3>
+    </div>
     {currentPreferences.length > 0 && (
       <Button
         variant="ghost"
         size="sm"
         onClick={onClear}
+        className="text-red-600 hover:text-red-700 hover:bg-red-50"
       >
         Limpar
       </Button>
@@ -51,43 +54,41 @@ const PreferencesHeader = ({ currentPreferences, onClear }) => (
   </div>
 )
 
-const PreferencesActions = ({ onClose }) => (
-  <div className="mt-4 flex items-center justify-end gap-2">
-    <Button
-      variant="outline"
-      size="sm"
-      onClick={onClose}
-    >
-      Cancelar
-    </Button>
-    <Button
-      size="sm"
-      onClick={onClose}
-    >
-      Aplicar filtros
-    </Button>
-  </div>
-)
-
 export default function Preferences({ preferences, selectedPreferences = [], onPreferenceChange }) {
-  const [currentPreferences, setCurrentPreferences] = useState(selectedPreferences)
   const [isOpen, setIsOpen] = useState(false)
+  const dropdownRef = useRef(null)
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
 
   const handlePreferenceChange = (preference) => {
     let updatedPreferences = []
 
-    if (currentPreferences.includes(preference)) {
-      updatedPreferences = currentPreferences.filter((pref) => pref !== preference);
+    if (selectedPreferences.includes(preference)) {
+      updatedPreferences = selectedPreferences.filter((pref) => pref !== preference)
     } else {
-      updatedPreferences = [...currentPreferences, preference];
+      updatedPreferences = [...selectedPreferences, preference]
     }
 
-    setCurrentPreferences(updatedPreferences)
     onPreferenceChange(updatedPreferences)
   }
 
+  const handleClear = () => {
+    onPreferenceChange([])
+  }
+
   return (
-    <div className="relative ">
+    <div className="relative" ref={dropdownRef}>
       <Button
         variant="outline"
         onClick={() => setIsOpen(!isOpen)}
@@ -98,27 +99,23 @@ export default function Preferences({ preferences, selectedPreferences = [], onP
           <span>Preferências</span>
         </div>
         <span className="ml-2 rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium">
-          {currentPreferences.length}
+          {selectedPreferences.length}
         </span>
       </Button>
 
       {isOpen && (
         <div className="absolute top-full left-0 z-50 mt-2 w-full rounded-lg border bg-card p-4 shadow-lg space-y-4 bg-white">
           <PreferencesHeader
-            currentPreferences={currentPreferences}
-            onClear={() => {
-              setCurrentPreferences([])
-              onPreferenceChange([])
-            }}
+            currentPreferences={selectedPreferences}
+            onClear={handleClear}
           />
 
           <PreferencesList
             preferences={preferences}
-            currentPreferences={currentPreferences}
+            currentPreferences={selectedPreferences}
             onPreferenceChange={handlePreferenceChange}
           />
 
-          <PreferencesActions onClose={() => setIsOpen(false)} />
         </div>
       )}
     </div>
