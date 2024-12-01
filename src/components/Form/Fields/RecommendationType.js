@@ -48,10 +48,10 @@ function RecommendationType({ onRecommendationTypeChange }) {
 
   return (
     <div className="space-y-2 w-full">
-      <div className="flex gap-3 ">
+      <div className="flex flex-col md:flex-row gap-3 ">
         <Button
           variant={'outline'}
-          className={`py-4 space-x-2 transition-transform ${selected === 'SingleProduct' ? 'border-blue-500 shadow-lg' : ''
+          className={`w-full lg:w-auto py-4 space-x-2 transition-transform ${selected === 'SingleProduct' ? 'border-blue-500 shadow-lg' : ''
             }`}
           onClick={() => handleSelect('SingleProduct')}
         >
@@ -63,7 +63,7 @@ function RecommendationType({ onRecommendationTypeChange }) {
 
         <Button
           variant={'outline'}
-          className={`py-4 space-x-2 transition-transform ${selected === 'MultipleProducts' ? 'border-blue-500 shadow-lg' : ''}`}
+          className={`w-full lg:w-auto py-4 space-x-2 transition-transform ${selected === 'MultipleProducts' ? 'border-blue-500 shadow-lg' : ''}`}
           onClick={() => handleSelect('MultipleProducts')}
         >
           <div className="rounded-full bg-blue-100 p-2">
