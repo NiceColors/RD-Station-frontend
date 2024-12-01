@@ -1,70 +1,76 @@
-# Getting Started with Create React App
+# Teste Técnico - Recomendador de Produtos RD Station
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este projeto é parte do teste técnico para a vaga de desenvolvedor front-end na RD Station. O objetivo principal é implementar a lógica de recomendação de produtos RD Station em uma aplicação web existente.
 
-## Available Scripts
+## Missão
 
-In the project directory, you can run:
+Desenvolver a funcionalidade central de recomendação de produtos dentro de uma aplicação React.js pré-existente. A implementação deve permitir aos usuários selecionar suas preferências e funcionalidades desejadas, e então receber recomendações de produtos correspondentes.
 
-### `yarn start`
+## Tecnologias Utilizadas
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- React.js: Para o desenvolvimento do front-end
+- json-server: Para simular um servidor RESTful com dados de produtos
+- Tailwind CSS: Para estilização e layout responsivo
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Critérios de Aceite
 
-### `yarn test`
+1. Formulário funcional para receber preferências do usuário
+   - [x] Implementar campos de seleção para todas as preferências
+   - [x] Validação de campos obrigatórios
+   - [x] Feedback visual para o usuário
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2. Recomendações baseadas nas preferências selecionadas
+   - [x] Algoritmo de matching entre preferências e produtos
+   - [x] Exibição clara dos resultados
 
-### `yarn build`
+3. Modo SingleProduct
+   - [x] Implementar lógica de seleção do produto mais adequado
+   - [x] Exibição detalhada do produto recomendado
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+4. Modo MultipleProducts
+   - [x] Implementar lógica de filtro para múltiplos produtos
+5. Tratamento de empates
+   - [x] Implementar lógica para selecionar último produto válido
+   - [x] Documentar critérios de desempate
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+6. Sistema modular e extensível
+   - [x] Componentes reutilizáveis
+   - [x] Padrões de código consistentes
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+7. Tratamento de combinações de preferências
+   - [x] Testes para diferentes cenários
+   - [x] Tratamento de casos edge
+   - [x] Feedback para combinações sem resultados
 
-### `yarn eject`
+## Componentes Principais
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1. **Form**: Componente principal para entrada de dados do usuário.
+2. **RecommendationList**: Exibe a lista de produtos recomendados.
+3. **ProductsContext**: Gerencia o estado global da aplicação.
+4. **RecommendationService**: Lógica de negócios para gerar recomendações.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Fluxo de Dados
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+1. O usuário interage com o `Form` para selecionar preferências e características.
+2. O `ProductsContext` atualiza o estado global com as seleções do usuário.
+3. Quando o usuário solicita recomendações, o `RecommendationService` é chamado.
+4. O `RecommendationList` exibe os resultados retornados pelo serviço.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Extensibilidade
 
-## Learn More
+- Novos campos de entrada podem ser adicionados ao `Form` criando novos componentes de campo.
+- O `RecommendationService` pode ser estendido para incluir algoritmos de recomendação mais complexos.
+- Novos tipos de visualização podem ser adicionados criando componentes adicionais similares ao `RecommendationList`.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Testes
 
-### Code Splitting
+O projeto inclui testes unitários para validar as funcionalidades implementadas. Execute-os com `yarn test`.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Autor
 
-### Analyzing the Bundle Size
+Desenvolvido por Victor Batista
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Licença
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Este projeto está licenciado sob a [Licença MIT](LICENSE).
