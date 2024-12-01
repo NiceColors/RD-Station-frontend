@@ -51,7 +51,8 @@ const getRecommendations = (
   const matchingProducts = validProducts.filter(productMatchesCriteria);
 
   if (isSingleProduct) {
-    return matchingProducts.length > 0 ? [matchingProducts[matchingProducts.length - 1]] : [];
+    const lastValidProduct = matchingProducts[matchingProducts.length - 1];
+    return lastValidProduct ? [lastValidProduct] : [];
   }
 
   return matchingProducts;

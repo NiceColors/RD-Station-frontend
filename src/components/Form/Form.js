@@ -19,6 +19,16 @@ const CloseIcon = () => (
   </svg>
 );
 
+/**
+ * Form Component
+ *
+ * Componente principal do formulário de recomendações que permite aos usuários:
+ * - Selecionar preferências
+ * - Escolher features
+ * - Definir tipo de recomendação
+ * - Gerar recomendações personalizadas
+ */
+
 function Form() {
   const {
     preferences,
